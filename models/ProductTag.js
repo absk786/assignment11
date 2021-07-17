@@ -6,7 +6,14 @@ class ProductTag extends Model {}
 
 ProductTag.init(
   {
-    // define columns
+    product_id: {
+      type: DataTypes.INTEGER,// use the special equalize data types object provide what type of data it is
+      allowNull:false, //this is equiv of SQLs NOT NULL option
+  },
+    tag_id: {
+      type: DataTypes.INTEGER,// use the special equalize data types object provide what type of data it is
+      allowNull:false, //this is equiv of SQLs NOT NULL option
+  },
   },
   {
     sequelize,

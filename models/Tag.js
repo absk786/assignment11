@@ -6,7 +6,10 @@ class Tag extends Model {}
 
 Tag.init(
   {
-    // define columns
+    tag_name: {
+      type: DataTypes.STRING,// use the special equalize data types object provide what type of data it is
+      allowNull:false, //this is equiv of SQLs NOT NULL option
+    },
   },
   {
     sequelize,

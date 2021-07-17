@@ -6,7 +6,12 @@ class Category extends Model {}
 
 Category.init(
   {
-    // define columns
+    catogery_name: {
+      type: DataTypes.INTEGER,// use the special equalize data types object provide what type of data it is
+      allowNull:false, //this is equiv of SQLs NOT NULL option
+      primaryKey: true, //instruct that this is primary key
+      autoIncrement:true //turn on autoincrement
+  },
   },
   {
     sequelize,
