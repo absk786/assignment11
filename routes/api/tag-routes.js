@@ -5,7 +5,20 @@ const { Tag, Product, ProductTag } = require('../../models');
 
 router.get('/', (req, res) => {
   // find all tags
-  Tag.findAll().then(dbTagData => {
+  Tag.findAll({
+    order: [['created_at', 'DESC']],
+    include: [
+      {
+        //need to go through this cross ref table to get to product description
+        model: ProductTag,
+        include: {
+          //product will get the description
+          model: Product,
+          attributes: ['product_name']
+        }
+      },
+    ]
+  }).then(dbTagData => {
     res.json(dbTagData)
   })
   .catch(err => {
@@ -15,8 +28,8 @@ router.get('/', (req, res) => {
   // be sure to include its associated Product data
 });
 
+// find a single tag by its `id`
 router.get('/:id', (req, res) => {
-  // find a single tag by its `id`
   Tag.findOne({
     where:{
       id:req.params.id
@@ -38,9 +51,7 @@ router.get('/:id', (req, res) => {
 
 // create a new tag
 router.post('/', (req, res) => {
-Tag.create({
-  tag_name: "newTag"
-})
+Tag.create(req.body)
 .then(dbTagData => {
   res.json(dbTagData)
 })
@@ -52,7 +63,7 @@ Tag.create({
 
 // update a tag's name by its `id` value
 router.put('/:id', (req, res) => {
-  Tag.Update({
+  Tag.update(req.body, {
     where: {
       id:req.params.id
     }
@@ -91,6 +102,8 @@ router.delete('/:id', (req, res) => {
     res.status(500).json(err)
   })
 });
+
+
 
 
 module.exports = router;
